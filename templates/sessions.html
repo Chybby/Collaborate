@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-10">
+      <h1>{{ code }}</h1>
+      <h3>{{ name }}</h3>
+    </div>
+    <div class="col-xs-10">
+      {% for sesh in seshes %}
+        <a href="/course/{{ code }}/{{ sesh }}">{{ sesh }}</a><br />
+      {% endfor %}
+    </div>
+  </div>
+  <hr/>
+{% endblock %}
