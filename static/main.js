@@ -1,24 +1,22 @@
 $(document).ready(function() {
 
   var courses = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.course_code); },
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace('code'); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
-    local: [
-      { course_code: "COMP1917" },
-      { course_code: "COMP1927" },
-      { course_code: "COMP1911" },
-      { course_code: "COMP2041" },
-      { course_code: "COMP3891" },
-      { course_code: "COMP2121" }
-    ]
+    prefetch: {
+      url: '',
+      filter: function(list) {
+        return $.map(list, function(course) { return { code: course }; });
+      }
+    }
   });
 
   courses.initialize();
 
   $('#course-search').typeahead(null, {
     name: 'courses',
-    displayKey: 'course_code',
+    displayKey: 'code',
     source: courses.ttAdapter()
   });
 
@@ -31,8 +29,13 @@ $(document).ready(function() {
 
   $('div.star-rating button').click(function() {
     var parent = $(this.parentNode);
-    for (var i=0; parent.children()[i] != this; i++) {
-      parent.children()[i];
+    var i
+    for (i=0; parent.children()[i] != this; i++) {
+      $(parent.children()[i]).css('color', '#E74C3C');
+    }
+    $(this).css('color', '#E74C3C');
+    for (i++; i < parent.children().length; i++) {
+      $(parent.children()[i]).css('color', '#34495E');
     }
   });
 });
