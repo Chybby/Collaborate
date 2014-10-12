@@ -1,30 +1,35 @@
 $(document).ready(function() {
-    // Focus state for append/prepend inputs
-    $('.input-group').on('focus', '.form-control', function () {
-      $(this).closest('.input-group, .form-group').addClass('focus');
-    }).on('blur', '.form-control', function () {
-      $(this).closest('.input-group, .form-group').removeClass('focus');
-    });
 
-    var states = new Bloodhound({
-      datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.word); },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 4,
-      local: [
-        { word: "Alabama" },
-        { word: "Alaska" },
-        { word: "Arizona" },
-        { word: "Arkansas" },
-        { word: "California" },
-        { word: "Colorado" }
-      ]
-    });
+  var courses = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.course_code); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    local: [
+      { course_code: "COMP1917" },
+      { course_code: "COMP1927" },
+      { course_code: "COMP1911" },
+      { course_code: "COMP2041" },
+      { course_code: "COMP3891" },
+      { course_code: "COMP2121" }
+    ]
+  });
 
-    states.initialize();
+  courses.initialize();
 
-    $('#course-search').typeahead(null, {
-      name: 'states',
-      displayKey: 'word',
-      source: states.ttAdapter()
-    });
+  $('#course-search').typeahead(null, {
+    name: 'courses',
+    displayKey: 'course_code',
+    source: courses.ttAdapter()
+  });
+
+  $('#course-search').keyup(function(event) {
+    if (event.keyCode == 13) { //enter
+      console.log(this.value);
+      $('#search-form').submit();
+    }
+  });
+
+  $('div.star-rating button').click(function() {
+    console.log(this);
+  });
 });
