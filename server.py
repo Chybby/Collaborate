@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-from flask import Flask
+from flask import Flask, render_template
 from flask.ext import login
 import sqlite3
 
@@ -30,9 +30,9 @@ def load_user(zid):
         }
         return obj
 
-@app.route("/")
+@app.route('/')
 def index():
-    return 'wob'
+    return render_template('index.html')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
