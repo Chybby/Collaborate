@@ -22,12 +22,11 @@ def authenticate(username, password):
 
         first_name = attr_results['givenName'][0]
         last_name = attr_results['sn'][0]
-        email = attr_results['mail'][0]
+        #email = attr_results['mail'][0]
 
         return {
             'first_name': first_name,
-            'last_name': last_name,
-            'email': email
+            'last_name': last_name
         }
 
     except ldap.LDAPError, e:
