@@ -7,6 +7,8 @@ import sqlite3
 from config import *
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '2SPOOPY'
+
 conn = sqlite3.connect(DATABASE_FILENAME)
 cur = conn.cursor()
 
