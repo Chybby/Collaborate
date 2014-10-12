@@ -1,14 +1,11 @@
 $(document).ready(function() {
 
   var courses = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace('code'); },
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
     prefetch: {
-      url: '',
-      filter: function(list) {
-        return $.map(list, function(course) { return { code: course }; });
-      }
+      url: '/json/course_codes'
     }
   });
 
@@ -16,7 +13,7 @@ $(document).ready(function() {
 
   $('#course-search').typeahead(null, {
     name: 'courses',
-    displayKey: 'code',
+    displayKey: '',
     source: courses.ttAdapter()
   });
 
