@@ -3,13 +3,15 @@
 {% block content %}
   <div class="row">
     <div class="col-xs-10">
-      <h1>COMP1917</h1>
+      <h1>{{ code }}</h1>
+      <h3>{{ name }}</h3>
     </div>
     <div class="col-xs-2">
       <button class="btn btn-embossed btn-primary" id="rate">Rate</button>
     </div>
   </div>
-  <p>COMP1917 is a course in which you learn C but eventually it will be Python for some reason.</p>
+  <p>Lecturer{{ 's' if lecturers|length > 1 else '' }}: {{ ', '.join(lecturers) }}</p>
+  <p>{{ desc|safe }}</p>
   <div class="row">
     <div class="col-xs-2">
       <p>Content:</p>
