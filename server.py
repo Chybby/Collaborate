@@ -115,6 +115,40 @@ def course(code, sesh):
             lecturers=lecturer_names,
             sesh=sesh)
 
+@app.route('/course/<code>')
+def sessions(code):
+    cur = get_cursor()
+
+    res = cur.execute('''
+    SELECT
+        name, description
+    FROM
+        courses
+    WHERE
+        code = ?
+    ''', (code,))
+    
+    name, desc = res.fetchone()
+
+    res = cur.execute('''
+    SELECT
+        year, session
+    FROM
+        offerings
+    WHERE
+        code = ?
+    ''', (code,))
+
+    rows = res.fetchall()
+
+    seshes = ['%02d%s' % (row[0] % 1000, row[1].lower()) for row in rows]
+    #sesh = '%02d%s' % (year % 1000, session.lower())
+
+    return render_template('sessions.html',
+            code=code,
+            name=name,
+            seshes=seshes)
+
 @app.route('/rate')
 def rate():
     return render_template('rate.html')
