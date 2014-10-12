@@ -30,6 +30,9 @@ $(document).ready(function() {
   });
 
   $('div.star-rating button').click(function() {
-    console.log(this);
+    var parent = $(this.parentNode);
+    for (var i=0; parent.children()[i] != this; i++) {
+      parent.children()[i];
+    }
   });
 });
