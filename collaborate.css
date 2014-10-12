@@ -1,5 +1,9 @@
+body {
+  padding-top:100px;
+}
+
 #course-search {
-  width: 400px;
+  width: 300px;
 }
 
 .navbar-left {
@@ -12,10 +16,22 @@
 }
 
 .form-group {
-  margin: 16px 20px 0 30px;
+  margin: 16px 0 0 30px;
   padding: 0;
 }
 
-.navbar-link {
+button#rate {
+  margin-top: 45px;
+}
+
+a {
   cursor: pointer;
+}
+
+#rate-form .row {
+  margin-bottom: 20px;
+}
+
+#rate-form #rate-submit-button {
+  margin-left: 15px;
 }
