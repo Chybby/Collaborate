@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask.ext import login
 import sqlite3
 import json
+import re
 
 from config import *
 
@@ -47,7 +48,7 @@ def course_codes():
     ''')
 
     rows = res.fetchall()
-    codes = [row[0] for row in rows]
+    codes = [{'code': row[0]} for row in rows]
 
     return json.dumps(codes)
 
@@ -55,9 +56,15 @@ def course_codes():
 def index():
     return render_template('index.html')
 
-@app.route('/course/<code>')
-def course(code):
+@app.route('/course/<code>/<sesh>')
+def course(code, sesh):
     cur = get_cursor()
+
+    # sick assert m8
+    m = re.match(r'^([0-9]{2})(s[12]|x1)$', sesh)
+
+    year = int(m.group(1)) + 2000 # nice y2k you got there
+    session = m.group(2).upper()
 
     res = cur.execute('''
     SELECT
@@ -79,7 +86,7 @@ def course(code):
         code = ? AND
         year = ? AND
         session = ?
-    ''', (code, 2014, 'S1'))
+    ''', (code, year, session))
 
     offering_id = res.fetchone()[0]
 
@@ -99,11 +106,14 @@ def course(code):
     lecturers = res.fetchall()
     lecturer_names = ['%s %s' % (l[1], l[2]) for l in lecturers]
 
+    #sesh = '%02d%s' % (year % 1000, session.lower())
+
     return render_template('course.html',
             code=code,
             name=name,
             desc=desc,
-            lecturers=lecturer_names)
+            lecturers=lecturer_names,
+            sesh=sesh)
 
 @app.route('/rate')
 def rate():
