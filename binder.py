@@ -76,6 +76,26 @@ CREATE TABLE lecturers (
 )
 ''')
 
+# user stuff
+cur.execute('''
+CREATE TABLE users (
+    zid text primary key,
+    first_name text,
+    surname
+)
+''')
+
+cur.execute('''
+CREATE TABLE ratings (
+    offering_id integer,
+    content_rating integer,
+    lecturer_rating integer,
+    difficulty_rating integer,
+    comment text,
+    user_id text
+)
+''')
+
 '''
 print 'Loading passwd'
 print
