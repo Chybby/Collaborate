@@ -17,8 +17,7 @@ $(document).ready(function() {
 
   $('#course-search').keyup(function(event) {
     if (event.keyCode == 13) { //enter
-      console.log(this.value);
-      $('#search-form').submit();
+      window.location = 'courses/' + this.value;
     }
   });
 
